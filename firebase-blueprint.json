@@ -1,0 +1,73 @@
+{
+  "entities": {
+    "Task": {
+      "title": "Task",
+      "description": "A task for the platform management",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "The title of the task" },
+        "description": { "type": "string", "description": "Detailed description" },
+        "status": { "type": "string", "enum": ["todo", "in-progress", "done"], "description": "Current status" },
+        "priority": { "type": "string", "enum": ["low", "medium", "high"], "description": "Task priority" },
+        "assignedTo": { "type": "string", "description": "User ID assigned to this task" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["title", "status", "priority", "createdAt"]
+    },
+    "Article": {
+      "title": "Article",
+      "description": "An editorial article",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "author": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "published"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "content", "status", "createdAt"]
+    },
+    "AgentLog": {
+      "title": "AgentLog",
+      "description": "Logs of AI agent interactions",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "message": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "assistant"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "message", "role", "timestamp"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Platform user profile",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "editor"] },
+        "lastLogin": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Collection of management tasks"
+    },
+    "/articles/{articleId}": {
+      "schema": "Article",
+      "description": "Collection of editorial articles"
+    },
+    "/agent_logs/{logId}": {
+      "schema": "AgentLog",
+      "description": "History of AI agent conversations"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and permissions"
+    }
+  }
+}
